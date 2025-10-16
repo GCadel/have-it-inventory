@@ -1,4 +1,3 @@
-import { Link } from 'react-router';
 import styles from './Button.module.css';
 
 export const Button = ({ buttonType, text, action, disabled = false }) => {

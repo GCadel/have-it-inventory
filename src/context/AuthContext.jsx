@@ -18,8 +18,6 @@ export function AuthContextProvider({ children }) {
           },
         },
       });
-      //
-      console.log('Sign up data:', data);
 
       if (error) {
         console.error('Attempt sign up error:', error);
@@ -40,7 +38,7 @@ export function AuthContextProvider({ children }) {
       if (error) {
         console.error('Attempt logout error:', error);
       } else {
-        console.log('Logout up success');
+        console.log('Logout success');
       }
       return error;
     } catch (error) {
