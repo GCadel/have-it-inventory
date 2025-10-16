@@ -4,17 +4,12 @@ import { Layout } from './features/Layout/Layout';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { NotFound } from './pages/NotFound';
-import { useEffect, useState } from 'react';
 import { Login } from './pages/Login';
 import { Signup } from './pages/Signup';
 import { Dashboard } from './pages/Dashboard';
 import { AuthContextProvider } from './context/AuthContext';
 
 function App() {
-  // const [loggedIn, setLoggedIn] = useState(false);
-
-  useEffect(() => {}, []);
-  // if (loggedIn)
   return (
     <Layout>
       <AuthContextProvider>
