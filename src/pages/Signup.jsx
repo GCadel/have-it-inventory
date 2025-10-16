@@ -3,79 +3,48 @@ import { Button } from '../shared/Button/Button';
 
 import { Link, useNavigate } from 'react-router';
 import { ButtonContainer } from '../shared/ButtonContainer';
-import { UserAuth } from '../context/AuthContext';
+import FormField from '../shared/FormField';
 
 export const Signup = () => {
-  const [loading, setLoading] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState(null);
-  const [success, setSuccess] = useState(false);
-  const signupForm = useRef(null);
   const navigate = useNavigate();
+  const signupForm = useRef(null);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const { session, signupNewUser } = UserAuth();
-
-  console.log(session);
-
-  useEffect(() => {
-    async function handleSubmit() {
-      const formData = new FormData(signupForm.current);
-      const email = formData.get('email');
-
-      if (!email) return;
-      setLoading(true);
-
-      try {
-        const { error } = await signupNewUser(email);
-        console.log(error);
-
-        if (!error) {
-          navigate('/dashboard');
-        }
-      } catch (error) {
-        console.error('Signup error: ', error);
-        setSubmitError(error);
-      }
-
-      // const { error } = await sendMagicLink(email);
-      // const { error } = await signupNewUser(email);
-
-      // if (error) {
-      //   setSubmitError(error);
-      //   setSuccess(false);
-      // } else {
-      //   setSuccess(true);
-      //   setSubmitError('');
-      // }
-      setSubmitting(false);
-      setLoading(false);
-    }
-
-    if (submitting) {
-      handleSubmit();
-    }
-  }, [submitting]);
+  function handleSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    alert(`Thanks for signing up, ${formData.get('name')}`);
+  }
 
   return (
     <>
       <h2>Get Started With Have-It</h2>
       <p>Create an account now!</p>
-      <form
-        id="signup-form"
-        ref={signupForm}
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSubmitting(true);
-        }}
-      >
+      <form id="signup-form" ref={signupForm} onSubmit={handleSubmit}>
         <div>
-          {submitError ? <p>`${submitError.message}`</p> : ``}
+          {error ? <p>Something went wrong: {`${error}`}</p> : ``}
           {success ? <p>Please check your email for your magic link</p> : ''}
         </div>
-        <div>
-          <label htmlFor="email">Email: </label>
-          <input type="email" id="email" name="email" required />
-        </div>
+        <FormField
+          name="name"
+          type={'text'}
+          placeholder={'John Doe'}
+          displayText={'Your name'}
+        />
+        <FormField
+          name="email"
+          type={'email'}
+          placeholder={'example@example.com'}
+          displayText={'Email'}
+        />
+        <FormField
+          name="password"
+          type={'password'}
+          displayText={'Password'}
+          min={8}
+        />
         <ButtonContainer>
           <Link to={'/login'}>Have an account?</Link>
           <Button
