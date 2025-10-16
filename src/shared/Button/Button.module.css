@@ -11,7 +11,7 @@
   display: inline-block;
   padding: 8px 16px;
   cursor: pointer;
-  color: #2d2d2d;
+  color: white;
 
   &:disabled {
     color: lightgray;
@@ -45,7 +45,7 @@
 }
 
 .btn_secondary {
-  border: #2d2d2d solid 2px;
+  border: #b8b8b8 solid 2px;
   &:disabled {
     border-color: lightgray;
   }
