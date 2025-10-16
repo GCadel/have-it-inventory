@@ -1,62 +1,52 @@
-import { useEffect, useRef, useState } from 'react';
-import { Button } from '../shared/Button/Button';
-import { sendMagicLink } from '../lib/auth';
+import { useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
+import { UserAuth } from '../context/AuthContext';
+import FormField from '../shared/FormField';
 import { ButtonContainer } from '../shared/ButtonContainer';
-import { Link } from 'react-router';
+import { Button } from '../shared/Button/Button';
 
 export const Login = () => {
-  const [loading, setLoading] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState(null);
-  const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
   const loginForm = useRef(null);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const { login } = UserAuth();
 
-  useEffect(() => {
-    async function handleSubmit() {
-      const formData = new FormData(loginForm.current);
-      const email = formData.get('email');
-
-      if (!email) return;
-      setLoading(true);
-
-      const { error } = await sendMagicLink(email);
+  async function handleLogin(e) {
+    e.preventDefault();
+    setLoading(true);
+    const formData = new FormData(e.target);
+    try {
+      const result = await login(
+        formData.get('email'),
+        formData.get('password')
+      );
 
       if (error) {
-        setSubmitError(error);
-        setSuccess(false);
-      } else {
-        setSuccess(true);
-        setSubmitError('');
+        console.error('Login unsuccessful', result);
       }
-      setSubmitting(false);
+      navigate('/dashboard');
+    } catch (error) {
+      setError('An error has occurred');
+      console.error('Login error:', error);
+    } finally {
       setLoading(false);
     }
-
-    if (submitting) {
-      handleSubmit();
-    }
-  }, [submitting]);
-
+  }
   return (
     <>
       <h2>Welcome back to Have-It</h2>
       <p>Please login</p>
-      <form
-        id="login-form"
-        ref={loginForm}
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSubmitting(true);
-        }}
-      >
-        <div>
-          {submitError ? <p>`${submitError.message}`</p> : ``}
-          {success ? <p>Please check your email for a login link</p> : ''}
-        </div>
-        <div>
-          <label htmlFor="email">Email: </label>
-          <input type="email" id="email" name="email" required />
-        </div>
+      <form id="login-form" ref={loginForm} onSubmit={handleLogin}>
+        <div>{error ? <p>Something went wrong: {`${error}`}</p> : ``}</div>
+
+        <FormField
+          name="email"
+          type={'email'}
+          placeholder={'example@example.com'}
+          displayText={'Email'}
+        />
+        <FormField name="password" type={'password'} displayText={'Password'} />
         <ButtonContainer>
           <Link to={'/signup'}>Don't have an account?</Link>
           <Button
