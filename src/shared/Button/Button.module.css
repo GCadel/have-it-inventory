@@ -1,0 +1,55 @@
+.btn_primary,
+.btn_secondary,
+.btn_default {
+  outline: none;
+  border: none;
+  line-height: 22px;
+  font-size: 16px;
+  max-height: 48px;
+  font-weight: 700;
+  background-color: transparent;
+  display: inline-block;
+  padding: 8px 16px;
+  cursor: pointer;
+  color: white;
+
+  &:disabled {
+    color: lightgray;
+    cursor: not-allowed;
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.9);
+  }
+}
+
+.btn_primary,
+.btn_secondary {
+  border-radius: 10px;
+  &:hover:not(:disabled) {
+    box-shadow: 2px 2px 5px black;
+    &:disabled {
+      box-shadow: none;
+    }
+  }
+}
+
+.btn_primary {
+  background: #454eaf;
+  border: #454eaf solid 2px;
+  color: white;
+  &:disabled {
+    background-color: rgb(76, 100, 108);
+    border: rgb(76, 100, 108) solid 2px;
+  }
+}
+
+.btn_secondary {
+  border: #b8b8b8 solid 2px;
+  &:disabled {
+    border-color: lightgray;
+  }
+}
+
+.btn_default {
+}
