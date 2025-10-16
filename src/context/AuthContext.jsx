@@ -2,51 +2,74 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
 const AuthContext = createContext();
+
 export function AuthContextProvider({ children }) {
   const [session, setSession] = useState(null);
 
-  // For a new user
-  async function signupNewUser(email) {
-    const { data, error } = await supabase.auth.signInWithOtp({
-      email,
-      //   options: {
-      //   emailRedirectTo: window.location.origin,
-      // },
-    });
-
-    if (error) {
-      console.log('Issue signing up');
-      return { error };
-    }
-    return { error: null };
-  }
-
-  // For signing in, might not need
-  async function login(email) {
+  // Sign up
+  async function signupNewUser(email, password, displayName) {
     try {
-      const { data, error } = await supabase.auth.signInWithOtp({ email });
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            displayName: displayName,
+          },
+        },
+      });
+      //
+      console.log('Sign up data:', data);
 
       if (error) {
-        console.error('Try Login error: ', error);
-        return { error };
+        console.error('Attempt sign up error:', error);
+      } else {
+        console.log('signup success');
       }
-
-      console.log('Login success', data);
-
-      return { data };
+      return data;
     } catch (error) {
-      console.error('Catch Login error: ', error);
+      console.error('Sign up error:', error);
+      return { error };
     }
   }
 
-  // For signing out
-  async function signout() {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error('Signout error:', error);
+  // Log off
+  async function logout() {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('Attempt logout error:', error);
+      } else {
+        console.log('Logout up success');
+      }
+      return error;
+    } catch (error) {
+      console.error('Logout error:', error);
+      return { error };
     }
   }
 
+  // Log in
+  async function login(email, password) {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) {
+        console.error('Attempt login error:', error);
+        return error;
+      } else {
+        console.log('Login success');
+        return data;
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      return { error };
+    }
+  }
+
+  // Listen for auth events and set the status, like logging in and signing out
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -58,7 +81,7 @@ export function AuthContextProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ session, signupNewUser, signout, login }}>
+    <AuthContext.Provider value={{ session, signupNewUser, logout, login }}>
       {children}
     </AuthContext.Provider>
   );
