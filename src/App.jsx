@@ -6,31 +6,29 @@ import { About } from './pages/About';
 import { NotFound } from './pages/NotFound';
 import { useEffect, useState } from 'react';
 import { Login } from './pages/Login';
+import { Signup } from './pages/Signup';
+import { Dashboard } from './pages/Dashboard';
+import { AuthContextProvider } from './context/AuthContext';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(false);
 
   useEffect(() => {}, []);
-  if (loggedIn)
-    return (
-      <Layout>
+  // if (loggedIn)
+  return (
+    <Layout>
+      <AuthContextProvider>
         <Routes>
           <Route index element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
-      </Layout>
-    );
-  else {
-    return (
-      <Layout>
-        <Routes>
-          <Route index element={<Login />} />
-          <Route path="/*" element={<NotFound />} />
-        </Routes>
-      </Layout>
-    );
-  }
+      </AuthContextProvider>
+    </Layout>
+  );
 }
 
 export default App;
