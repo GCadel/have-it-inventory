@@ -1,0 +1,52 @@
+.loading-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.loader {
+  aspect-ratio: 1;
+  width: 100px;
+  background-color: rgba(127, 191, 255, 0.11);
+  border-radius: 100%;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: spin 2s linear forwards infinite;
+}
+
+.loader::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  background-color: rgb(90, 119, 250);
+  width: 10px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 100%;
+}
+
+.loader::before {
+  content: '';
+  width: 80px;
+  aspect-ratio: 1;
+  background-color: #2d2d2d;
+
+  left: 0;
+
+  border-radius: 100%;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
