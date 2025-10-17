@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 import { UserAuth } from '../context/AuthContext';
 import { Button } from '../shared/Button/Button';
+import PartTable from '../features/PartTable/PartTable';
 
 export const Dashboard = () => {
   const { session, logout } = UserAuth();
@@ -21,6 +22,7 @@ export const Dashboard = () => {
         Welcome, {session ? session.user.user_metadata.displayName : 'User'}
       </h2>
       <Button text={'Logoff'} action={handleLogoff} buttonType={'secondary'} />
+      <PartTable />
     </>
   );
 };
