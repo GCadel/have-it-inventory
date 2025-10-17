@@ -1,0 +1,23 @@
+.searchbar {
+  display: flex;
+  align-items: center;
+
+  padding: 5px 10px;
+  background-color: #6161612c;
+  height: 42px;
+  border-radius: 5px;
+  gap: 5px;
+
+  input {
+    font-size: inherit;
+    background-color: transparent;
+    color: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
