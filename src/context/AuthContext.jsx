@@ -21,10 +21,8 @@ export function AuthContextProvider({ children }) {
 
       if (error) {
         console.error('Attempt sign up error:', error);
-      } else {
-        console.log('signup success');
       }
-      return data;
+      return { error };
     } catch (error) {
       console.error('Sign up error:', error);
       return { error };
@@ -37,8 +35,6 @@ export function AuthContextProvider({ children }) {
       const { error } = await supabase.auth.signOut();
       if (error) {
         console.error('Attempt logout error:', error);
-      } else {
-        console.log('Logout success');
       }
       return error;
     } catch (error) {
@@ -56,10 +52,9 @@ export function AuthContextProvider({ children }) {
       });
       if (error) {
         console.error('Attempt login error:', error);
-        return error;
+        return { error };
       } else {
-        console.log('Login success');
-        return data;
+        return { error };
       }
     } catch (error) {
       console.error('Login error:', error);

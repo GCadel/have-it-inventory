@@ -4,6 +4,7 @@ import { UserAuth } from '../context/AuthContext';
 import FormField from '../shared/FormField';
 import { ButtonContainer } from '../shared/ButtonContainer';
 import { Button } from '../shared/Button/Button';
+import ErrorBox from '../shared/ErrorBox';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -17,15 +18,17 @@ export const Login = () => {
     setLoading(true);
     const formData = new FormData(e.target);
     try {
-      const result = await login(
+      const { error } = await login(
         formData.get('email'),
         formData.get('password')
       );
 
       if (error) {
-        console.error('Login unsuccessful', result);
+        setError('Incorrect email or password');
+      } else {
+        setError(null);
+        navigate('/dashboard');
       }
-      navigate('/dashboard');
     } catch (error) {
       setError('An error has occurred');
       console.error('Login error:', error);
@@ -38,8 +41,6 @@ export const Login = () => {
       <h2>Welcome back to Have-It</h2>
       <p>Please login</p>
       <form id="login-form" ref={loginForm} onSubmit={handleLogin}>
-        <div>{error ? <p>Something went wrong: {`${error}`}</p> : ``}</div>
-
         <FormField
           name="email"
           type={'email'}
@@ -47,6 +48,7 @@ export const Login = () => {
           displayText={'Email'}
         />
         <FormField name="password" type={'password'} displayText={'Password'} />
+        <ErrorBox error={error} />
         <ButtonContainer>
           <Link to={'/signup'}>Don't have an account?</Link>
           <Button
