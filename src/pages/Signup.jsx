@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button } from '../shared/Button/Button';
 
 import { Link, useNavigate } from 'react-router';
@@ -12,7 +12,13 @@ export const Signup = () => {
   const signupForm = useRef(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { signupNewUser } = UserAuth();
+  const { signupNewUser, session } = UserAuth();
+
+  useEffect(() => {
+    if (session) {
+      navigate('/dashboard');
+    }
+  }, [session]);
 
   async function handleSignup(e) {
     e.preventDefault();

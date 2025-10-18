@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { UserAuth } from '../context/AuthContext';
 import FormField from '../shared/FormField';
@@ -11,7 +11,13 @@ export const Login = () => {
   const loginForm = useRef(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { login } = UserAuth();
+  const { login, session } = UserAuth();
+
+  useEffect(() => {
+    if (session) {
+      navigate('/dashboard');
+    }
+  }, [session]);
 
   async function handleLogin(e) {
     e.preventDefault();

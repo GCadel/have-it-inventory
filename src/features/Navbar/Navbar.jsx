@@ -1,7 +1,9 @@
 import { Link } from 'react-router';
 import { Button } from '../../shared/Button/Button';
+import { UserAuth } from '../../context/AuthContext';
 
 export const Navbar = ({ loggedIn = false }) => {
+  const { session } = UserAuth();
   return (
     <header className="navbar">
       <div>
@@ -12,7 +14,11 @@ export const Navbar = ({ loggedIn = false }) => {
         <ul className="nav-links">
           <li>
             <p>
-              <Link to={'/'}>Home</Link>
+              {session ? (
+                <Link to={'/dashboard'}>Home</Link>
+              ) : (
+                <Link to={'/'}>Home</Link>
+              )}
             </p>
           </li>
           <li>

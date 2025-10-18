@@ -9,11 +9,12 @@ import { Signup } from './pages/Signup';
 import { Dashboard } from './pages/Dashboard';
 import { AuthContextProvider } from './context/AuthContext';
 import PrivateRoute from './features/PrivateRoute';
+import CreatePart from './pages/CreatePart';
 
 function App() {
   return (
-    <Layout>
-      <AuthContextProvider>
+    <AuthContextProvider>
+      <Layout>
         <Routes>
           <Route index element={<Home />} />
           <Route path="/about" element={<About />} />
@@ -27,10 +28,18 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/create_part"
+            element={
+              <PrivateRoute>
+                <CreatePart />
+              </PrivateRoute>
+            }
+          />
           <Route path="/*" element={<NotFound />} />
         </Routes>
-      </AuthContextProvider>
-    </Layout>
+      </Layout>
+    </AuthContextProvider>
   );
 }
 
