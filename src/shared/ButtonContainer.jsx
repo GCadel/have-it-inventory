@@ -6,8 +6,6 @@ export const ButtonContainer = ({ children }) => {
         gap: '10px',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: '1rem',
-        marginBottom: '1rem',
       }}
     >
       {children}
