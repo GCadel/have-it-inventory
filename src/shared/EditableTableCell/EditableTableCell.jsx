@@ -1,14 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const EditableTableCell = ({ cellValue, type, name }) => {
+const EditableTableCell = ({
+  cellValue,
+  type,
+  name,
+  cellUpdater,
+  markForEdit,
+}) => {
   const [isEditing, setIsEditing] = useState(false);
   const [value, setValue] = useState(cellValue);
   const [originalValue, setOriginalValue] = useState(cellValue);
+
+  useEffect(() => {
+    if (!isEditing) {
+      const newOb = {};
+      newOb[`${name}`] = value;
+      cellUpdater(newOb);
+    }
+  }, [originalValue]);
 
   function handleKeyDown(e) {
     if (e.code === 'Enter') {
       e.currentTarget.blur();
       setOriginalValue(e.target.value);
+      markForEdit(true);
     }
     if (e.code === 'Escape') {
       e.currentTarget.blur();
@@ -16,7 +31,7 @@ const EditableTableCell = ({ cellValue, type, name }) => {
     }
   }
 
-  function handleDoubleClick(e) {
+  function handleClick() {
     setIsEditing(true);
   }
 
@@ -38,7 +53,9 @@ const EditableTableCell = ({ cellValue, type, name }) => {
               min={0}
               step={1}
               name={name}
-              onChange={handleChange}
+              onChange={(e) => {
+                setValue(Number(e.target.value).toFixed(0));
+              }}
               value={value}
               onBlur={handleBlur}
               onKeyDown={handleKeyDown}
@@ -53,7 +70,7 @@ const EditableTableCell = ({ cellValue, type, name }) => {
               step={0.01}
               name={name}
               onChange={handleChange}
-              value={Number(value).toFixed(2)}
+              value={value}
               onBlur={handleBlur}
               onKeyDown={handleKeyDown}
             />
@@ -79,23 +96,20 @@ const EditableTableCell = ({ cellValue, type, name }) => {
     switch (type) {
       case 'currency':
         return (
-          <td style={{ textAlign: 'right' }} onDoubleClick={handleDoubleClick}>
+          <td style={{ textAlign: 'right' }} onClick={handleClick}>
             {Number(value).toFixed(2)}
           </td>
         );
       case 'count':
         return (
-          <td style={{ textAlign: 'right' }} onDoubleClick={handleDoubleClick}>
+          <td style={{ textAlign: 'right' }} onClick={handleClick}>
             {value}
           </td>
         );
       default:
-        return <td onDoubleClick={handleDoubleClick}>{value}</td>;
+        return <td onClick={handleClick}>{value}</td>;
     }
   }
-
-  // Should never be reached
-  return <>Wow</>;
 };
 
 export default EditableTableCell;

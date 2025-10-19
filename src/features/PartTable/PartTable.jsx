@@ -1,22 +1,67 @@
-import { useState } from 'react';
-import { parts } from '../../data/parts';
-import EditableTableCell from '../../shared/EditableTableCell/EditableTableCell';
+import { useEffect, useState } from 'react';
 import style from './PartTable.module.css';
 import { ButtonContainer } from '../../shared/ButtonContainer';
 import { Button } from '../../shared/Button/Button';
 import SearchBar from '../../shared/SearchBar/SearchBar';
+import { deleteParts, getAllParts } from '../../api/parts';
+import Loader from '../../shared/Loader/Loader';
+import { useNavigate } from 'react-router';
+import TableBody from './TableBody';
 const PartTable = () => {
   const [selectedItems, setSelectedItems] = useState([]);
+  const [tableData, setTableData] = useState([]);
+  const [refreshTable, setRefreshTable] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const navigator = useNavigate();
 
+  const [queryData, setQueryData] = useState([]);
+  const [queryTerm, setQueryTerm] = useState('');
+
+  // Fetch data from service, refreshes table when CRUD actions occur
+  useEffect(() => {
+    async function getData() {
+      const { data, error } = await getAllParts();
+      if (!error) {
+        setTableData(data);
+      }
+      setRefreshTable(false);
+      setLoading(false);
+    }
+
+    if (refreshTable) {
+      getData();
+    }
+  }, [refreshTable]);
+
+  // Mark row for deletion
   function addSelectedRow(rowId) {
     setSelectedItems([...selectedItems, rowId]);
   }
 
+  // Unmark row for deletion
   function removeSelectedRow(rowId) {
     const newItems = selectedItems.filter((itemId) => itemId !== rowId);
     setSelectedItems(newItems);
   }
 
+  // Take user to create part page
+  function createPart() {
+    navigator('/create_part');
+  }
+
+  // Delete selected rows from table
+  async function deleteSelectedData() {
+    const { error } = await deleteParts([...selectedItems]);
+    if (!error) {
+      setRefreshTable(true);
+      const allCheckedBoxes = document.querySelectorAll('input:checked');
+      allCheckedBoxes.forEach((checkbox) => (checkbox.checked = false));
+    } else {
+      console.log('error deleting items');
+    }
+  }
+
+  // Mark all rows for deletion
   function selectAllRows() {
     const allCheckboxes = document.querySelectorAll('.item-checkbox');
     const allRows = document.querySelectorAll('.item-row');
@@ -26,6 +71,7 @@ const PartTable = () => {
     allCheckboxes.forEach((checkbox) => (checkbox.checked = true));
   }
 
+  // Unmark all rows for deletion
   function deselectAllRows() {
     const allCheckboxes = document.querySelectorAll('.item-checkbox');
     allCheckboxes.forEach((checkbox) => {
@@ -34,89 +80,76 @@ const PartTable = () => {
     setSelectedItems([]);
   }
 
-  function searchByName(itemName) {}
+  // Search for items in inventory by name
+  function searchByName(itemName) {
+    setQueryTerm(itemName);
+    const filteredData = tableData.filter((item) =>
+      String(item.name).toLowerCase().includes(String(itemName).toLowerCase())
+    );
+    setQueryData(filteredData);
+  }
 
   return (
     <div className={style['part-table']}>
       <div className={style['part-table-controls']}>
         <h3>Your Parts List</h3>
-        <SearchBar />
+        <SearchBar
+          onChange={searchByName}
+          value={queryTerm}
+          placeholder={'Part Name'}
+        />
         <ButtonContainer>
           <Button
             text={'Delete Selected'}
             disabled={selectedItems.length < 1}
             buttonType={'secondary'}
+            action={deleteSelectedData}
           />
-          <Button text={'Add Item'} buttonType={'primary'} />
+          <Button
+            text={'Add Item'}
+            buttonType={'primary'}
+            action={createPart}
+          />
         </ButtonContainer>
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>
-              <input
-                type="checkbox"
-                name="select-all"
-                onClick={(e) => {
-                  if (e.target.checked) {
-                    selectAllRows();
-                  } else {
-                    deselectAllRows();
-                  }
-                }}
-              />
-            </th>
-            <th>Name</th>
-            <th>SKU</th>
-            <th style={{ textAlign: 'right' }}>Quantity</th>
-            <th style={{ textAlign: 'right' }}>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {parts.map((item) => (
-            <tr key={item.id} id={item.id} className="item-row">
-              <td>
+      {loading ? (
+        <Loader />
+      ) : tableData.length < 1 ? (
+        <div className={style['empty-message']}>
+          <h4>No items found!</h4>
+          <p>Get started by adding a new item</p>
+        </div>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>
                 <input
                   type="checkbox"
-                  name={`${item.name} checkbox`}
-                  className="item-checkbox"
+                  name="select-all"
                   onClick={(e) => {
                     if (e.target.checked) {
-                      addSelectedRow(String(item.id));
+                      selectAllRows();
                     } else {
-                      removeSelectedRow(String(item.id));
+                      deselectAllRows();
                     }
                   }}
                 />
-              </td>
-              <EditableTableCell
-                cellValue={item.name}
-                type={'text'}
-                name={'name'}
-              />
-
-              <EditableTableCell
-                cellValue={item.sku}
-                type={'text'}
-                name={'sku'}
-              />
-
-              <EditableTableCell
-                type={'count'}
-                cellValue={item.quantity}
-                name={'quantity'}
-              />
-
-              <EditableTableCell
-                type={'currency'}
-                cellValue={item.price}
-                name={'price'}
-              />
+              </th>
+              <th>Name</th>
+              <th>SKU</th>
+              <th style={{ textAlign: 'right' }}>Quantity</th>
+              <th style={{ textAlign: 'right' }}>Price {'($)'}</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <TableBody
+            tableData={queryTerm === '' ? tableData : queryData}
+            addRow={addSelectedRow}
+            removeRow={removeSelectedRow}
+          />
+        </table>
+      )}
     </div>
   );
 };
