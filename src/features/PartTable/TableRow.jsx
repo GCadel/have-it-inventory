@@ -9,7 +9,6 @@ export const TableRow = ({ rowData, addSelectedRow, removeSelectedRow }) => {
   useEffect(() => {
     async function updateRow() {
       const { error } = await updatePartById(item.id, item);
-      console.log(error);
     }
 
     if (finishedEditing) {

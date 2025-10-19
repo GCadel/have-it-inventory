@@ -20,7 +20,7 @@ const EditableTableCell = ({
   }, [originalValue]);
 
   function handleKeyDown(e) {
-    if (e.code === 'Enter') {
+    if (e.code === 'Enter' || e.code === 'Tab') {
       e.currentTarget.blur();
       setOriginalValue(e.target.value);
       markForEdit(true);
