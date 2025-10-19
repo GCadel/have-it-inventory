@@ -3,7 +3,8 @@ const FormField = ({
   placeholder,
   type,
   displayText,
-  min = 1,
+  min = 0,
+  intStep = false,
 }) => {
   return (
     <div>
@@ -15,6 +16,7 @@ const FormField = ({
         placeholder={placeholder}
         required
         minLength={min}
+        step={intStep ? 1 : 0.01}
       />
     </div>
   );
