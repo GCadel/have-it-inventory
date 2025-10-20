@@ -6,13 +6,6 @@ import { supabase } from '../lib/supabase';
 
 // Create assembly
 export async function createAssembly(assemblyEntry, userId) {
-  // const data = {
-  //   name: 'Assembly Name',
-  //   description: 'Description of Assembly',
-  //   user_id: userId,
-  // };
-
-  console.log('Create assembly:');
   const { error, data } = await supabase
     .from(TABLE)
     .insert(assemblyEntry)
@@ -43,6 +36,12 @@ export async function getAssemblyById(assemblyId, userId) {
   return { error, data };
 }
 
-// Update assembly
-
 // Delete assembly
+export async function deleteAssemblyById(assemblyId, userId) {
+  const { error } = await supabase
+    .from(TABLE)
+    .delete()
+    .eq('id', assemblyId)
+    .eq('user_id', userId);
+  return { error };
+}
