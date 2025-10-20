@@ -4,7 +4,6 @@ const Loader = () => {
   return (
     <div className={style['loading-container']}>
       <div className={style.loader}></div>
-      <p>Loading. Please wait...</p>
     </div>
   );
 };

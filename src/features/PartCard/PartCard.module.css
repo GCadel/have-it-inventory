@@ -1,0 +1,57 @@
+.part-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 250px;
+  list-style-type: none;
+
+  position: relative;
+
+  div::last-child {
+    outline: solid red 2px;
+  }
+}
+
+.delete {
+  position: absolute;
+  right: calc(100% + 10px);
+  background-color: transparent;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  display: flex;
+  width: 40px;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+  &:hover {
+    svg {
+      fill: red;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+}
+
+.quantity {
+  background-color: inherit;
+  border: none;
+  font-family: inherit;
+  color: inherit;
+  width: 48px;
+  font-size: inherit;
+  text-align: center;
+}
+
+.quantity::-webkit-inner-spin-button {
+  display: none;
+}
+
+.multiplier {
+  display: inline-block;
+  margin-left: 10px;
+}

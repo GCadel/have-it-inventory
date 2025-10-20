@@ -5,34 +5,33 @@ import ErrorBox from '../../shared/ErrorBox';
 import FormField from '../../shared/FormField';
 import { useRef, useState } from 'react';
 import { UserAuth } from '../../context/AuthContext';
-import { addPart } from '../../api/parts';
+import { createAssembly } from '../../api/assemblies';
 
-const PartForm = () => {
+const AssemblyForm = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const partForm = useRef();
   const { session } = UserAuth();
   const navigate = useNavigate();
+  const [description, setDescription] = useState('');
 
   async function submitData(e) {
     e.preventDefault();
     setLoading(true);
     const formData = new FormData(e.target);
 
-    const part = {
-      name: formData.get('part-name'),
-      quantity: formData.get('quantity'),
-      price: formData.get('price'),
-      sku: formData.get('sku'),
+    const assembly = {
+      name: formData.get('assembly-name'),
+      description: formData.get('description'),
       user_id: session.user.id,
     };
 
-    const { error } = await addPart(part);
+    const { error } = await createAssembly(assembly);
     if (error) {
       setErrorMessage('Uh oh, something went wrong');
       setLoading(false);
     } else {
-      navigate('/dashboard');
+      navigate('/assemblies');
     }
   }
   return (
@@ -40,34 +39,25 @@ const PartForm = () => {
       <br />
       <form ref={partForm} onSubmit={submitData}>
         <FormField
-          name="part-name"
+          name="assembly-name"
           type={'text'}
-          placeholder={'Pedal Set, Grey'}
-          displayText={'Part Name'}
+          placeholder={'BMX Bike'}
+          displayText={'Assembly Name'}
         />
-        <FormField
-          name="sku"
-          type={'text'}
-          displayText={'SKU'}
-          placeholder={'PEDAL-SET-GRAY'}
-        />
-        <FormField
-          name="price"
-          type={'number'}
-          displayText={'Price ($)'}
-          placeholder={'8.34'}
-        />
-        <FormField
-          name="quantity"
-          type={'number'}
-          displayText={'Quantity'}
-          placeholder={'2'}
-          intStep={true}
-        />
+
+        <label htmlFor="description">
+          <span>Description</span>
+          <textarea
+            name="description"
+            placeholder="A bike made for urban street riding"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
+        </label>
 
         <ErrorBox error={errorMessage} />
         <ButtonContainer>
-          <Link to={'/dashboard'}>Cancel</Link>
+          <Link to={'/assemblies'}>Cancel</Link>
           <Button
             text={loading ? 'Creating' : 'Create Part'}
             buttonType={'primary'}
@@ -79,4 +69,4 @@ const PartForm = () => {
   );
 };
 
-export default PartForm;
+export default AssemblyForm;

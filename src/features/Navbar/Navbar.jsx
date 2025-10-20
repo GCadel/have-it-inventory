@@ -1,9 +1,21 @@
-import { Link } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import { Button } from '../../shared/Button/Button';
 import { UserAuth } from '../../context/AuthContext';
 
-export const Navbar = ({ loggedIn = false }) => {
-  const { session } = UserAuth();
+export const Navbar = () => {
+  const { session, logout } = UserAuth();
+  const navigate = useNavigate();
+
+  async function handleLogoff(e) {
+    e.preventDefault();
+    try {
+      await logout();
+      navigate('/');
+    } catch (error) {
+      console.error('Logoff error occurred:', error);
+    }
+  }
+
   return (
     <header className="navbar">
       <div>
@@ -11,24 +23,38 @@ export const Navbar = ({ loggedIn = false }) => {
         <p>Your Inventory Management Tool</p>
       </div>
       <nav>
-        <ul className="nav-links">
-          <li>
-            <p>
-              {session ? (
-                <Link to={'/dashboard'}>Home</Link>
-              ) : (
-                <Link to={'/'}>Home</Link>
-              )}
-            </p>
-          </li>
-          <li>
-            <Link to={'/about'}>About</Link>
-          </li>
-          <li>
-            <Link to={'/settings'}>Settings</Link>
-          </li>
-        </ul>
-        {loggedIn ? <Button text={'Sign Out'} buttonType={'secondary'} /> : ''}
+        {session ? (
+          <ul className="nav-links">
+            <li>
+              <NavLink to={'/dashboard'}>Dashboard</NavLink>
+            </li>
+            <li>
+              <NavLink to={'/parts'}>Parts</NavLink>
+            </li>
+            <li>
+              <NavLink to={'/assemblies'}>Assemblies</NavLink>
+            </li>
+            <li>
+              <Button
+                text={'Logoff'}
+                action={handleLogoff}
+                buttonType={'secondary'}
+              />
+            </li>
+          </ul>
+        ) : (
+          <ul className="nav-links">
+            <li>
+              <NavLink to={'/'}>Home</NavLink>
+            </li>
+            <li>
+              <NavLink to={'/about'}>About</NavLink>
+            </li>
+            <li>
+              <NavLink to={'/settings'}>Settings</NavLink>
+            </li>
+          </ul>
+        )}
       </nav>
     </header>
   );

@@ -1,28 +1,31 @@
 import { useNavigate } from 'react-router';
 import { UserAuth } from '../context/AuthContext';
+import { ButtonContainer } from '../shared/ButtonContainer';
 import { Button } from '../shared/Button/Button';
-import PartTable from '../features/PartTable/PartTable';
 
 export const Dashboard = () => {
-  const { session, logout } = UserAuth();
+  const { session } = UserAuth();
   const navigate = useNavigate();
 
-  async function handleLogoff(e) {
-    e.preventDefault();
-    try {
-      await logout();
-      navigate('/');
-    } catch (error) {
-      console.error('Logoff error occurred:', error);
-    }
-  }
   return (
     <>
       <h2>
         Welcome, {session ? session.user.user_metadata.displayName : 'User'}
       </h2>
-      <Button text={'Logoff'} action={handleLogoff} buttonType={'secondary'} />
-      <PartTable />
+      <p style={{ textAlign: 'center' }}>Let's get started</p>
+      <br />
+      <ButtonContainer>
+        <Button
+          text={'Create New Assemblies'}
+          buttonType={'secondary'}
+          action={() => navigate('/assemblies')}
+        />
+        <Button
+          text={'Manage Your Inventory'}
+          buttonType={'primary'}
+          action={() => navigate('/parts')}
+        />
+      </ButtonContainer>
     </>
   );
 };

@@ -1,5 +1,5 @@
 import { UserAuth } from '../context/AuthContext';
-import { Navigate } from 'react-router';
+import { Navigate, Outlet } from 'react-router';
 import Loader from '../shared/Loader/Loader';
 
 const PrivateRoute = ({ children }) => {
@@ -9,7 +9,7 @@ const PrivateRoute = ({ children }) => {
     <Loader />;
   }
 
-  return <>{session ? children : <Navigate to={'/signup'} />}</>;
+  return <>{session ? <Outlet /> : <Navigate to={'/signup'} />}</>;
 };
 
 export default PrivateRoute;
