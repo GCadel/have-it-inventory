@@ -34,8 +34,6 @@ const PartForm = () => {
     } else {
       navigate('/dashboard');
     }
-
-    console.log(part);
   }
   return (
     <div>
