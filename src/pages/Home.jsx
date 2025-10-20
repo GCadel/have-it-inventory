@@ -1,13 +1,17 @@
 import { useNavigate } from 'react-router';
 import { Button } from '../shared/Button/Button';
 import { ButtonContainer } from '../shared/ButtonContainer';
+import { CenteredText } from '../shared/CenteredText';
 
 export const Home = () => {
   const navigate = useNavigate();
   return (
     <>
-      <h2>Home</h2>
-      <p>This is the home page</p>
+      <CenteredText>
+        <h2>Have-It</h2>
+        <p>Manage your inventory anywhere</p>
+      </CenteredText>
+      <br />
       <ButtonContainer>
         <Button
           text={'Login'}
@@ -15,7 +19,7 @@ export const Home = () => {
           buttonType={'secondary'}
         />
         <Button
-          text={'Sign Up'}
+          text={'Get Started'}
           action={() => navigate('/signup')}
           buttonType={'primary'}
         />

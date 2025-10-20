@@ -45,21 +45,21 @@ const AssemblyForm = () => {
           displayText={'Assembly Name'}
         />
 
-        <label htmlFor="description">
-          <span>Description</span>
+        <div className="form-field">
+          <label htmlFor="description">Description:</label>
           <textarea
             name="description"
             placeholder="A bike made for urban street riding"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           ></textarea>
-        </label>
+        </div>
 
         <ErrorBox error={errorMessage} />
         <ButtonContainer>
           <Link to={'/assemblies'}>Cancel</Link>
           <Button
-            text={loading ? 'Creating' : 'Create Part'}
+            text={loading ? 'Creating' : 'Create Assembly'}
             buttonType={'primary'}
             disabled={loading}
           />

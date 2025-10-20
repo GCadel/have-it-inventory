@@ -3,12 +3,16 @@ import { useEffect, useState } from 'react';
 import { updateAssemblyPartQuantity } from '../../api/assembly_parts';
 import style from './PartCard.module.css';
 import Loader from '../../shared/Loader/Loader';
-import ErrorBox from '../../shared/ErrorBox';
 
-export const PartCard = ({ partData, deletePart }) => {
+export const PartCard = ({
+  partData,
+  deletePart,
+  errMessage,
+  setErrMessage,
+}) => {
   const [partCount, setPartCount] = useState(partData.quantity);
   const [partCountLocal, setPartCountLocal] = useState(partData.quantity);
-  const [errMessage, setErrMessage] = useState('');
+
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -18,7 +22,7 @@ export const PartCard = ({ partData, deletePart }) => {
         partCount
       );
       if (error) {
-        setErrMessage('Error updating part count');
+        setErrMessage('Part count should be whole numbers');
       } else {
         setErrMessage('');
       }
@@ -48,7 +52,6 @@ export const PartCard = ({ partData, deletePart }) => {
   }
   return (
     <li className={style['part-card']}>
-      <ErrorBox error={errMessage} />
       <div>{partData.part_name}</div>
       <div className={style['quantity-controls']}>
         <span className={style.multiplier}>x</span>

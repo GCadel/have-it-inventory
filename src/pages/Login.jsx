@@ -5,6 +5,7 @@ import FormField from '../shared/FormField';
 import { ButtonContainer } from '../shared/ButtonContainer';
 import { Button } from '../shared/Button/Button';
 import ErrorBox from '../shared/ErrorBox';
+import { CenteredText } from '../shared/CenteredText';
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -44,8 +45,9 @@ export const Login = () => {
   }
   return (
     <>
-      <h2>Welcome back to Have-It</h2>
-      <p>Please login</p>
+      <CenteredText>
+        <h2>Welcome back to Have-It</h2>
+      </CenteredText>
       <form id="login-form" ref={loginForm} onSubmit={handleLogin}>
         <FormField
           name="email"
@@ -58,7 +60,7 @@ export const Login = () => {
         <ButtonContainer>
           <Link to={'/signup'}>Don't have an account?</Link>
           <Button
-            text={loading ? 'Submitting' : 'Login'}
+            text={loading ? 'Logging In' : 'Login'}
             buttonType={'primary'}
             disabled={loading}
           />

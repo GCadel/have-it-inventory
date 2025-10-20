@@ -59,7 +59,24 @@
   justify-content: center;
   font-weight: inherit;
 
-  &:hover {
+  span {
+    font-weight: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    color: #992b15;
+  }
+
+  &:disabled {
+    svg {
+      fill: grey;
+    }
+
+    span {
+      color: inherit;
+    }
+  }
+
+  &:not(:disabled):hover {
     svg {
       fill: red;
     }
@@ -67,6 +84,10 @@
     &:active {
       transform: scale(0.9);
       transition: 0.2s;
+    }
+
+    span {
+      color: red;
     }
   }
 }

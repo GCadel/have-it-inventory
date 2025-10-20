@@ -1,7 +1,10 @@
 .part-table {
   border-radius: 5px;
   margin: 10px 0;
-  background-color: #111124;
+  background-color: #252542;
+
+  width: 90dvw;
+  max-width: 1200px;
 }
 
 .part-table-controls {

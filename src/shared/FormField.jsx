@@ -7,7 +7,7 @@ const FormField = ({
   intStep = false,
 }) => {
   return (
-    <div>
+    <div className="form-field">
       <label htmlFor={name}>{displayText}: </label>
       <input
         type={type}

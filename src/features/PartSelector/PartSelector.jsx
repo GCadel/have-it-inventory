@@ -74,7 +74,7 @@ export const PartSelector = ({
                 <p>No parts available</p>
               )}
             </div>
-            <Button text={'Close'} action={closeModal} />
+            <Button text={'Cancel'} action={closeModal} />
           </dialog>,
           document.body
         )}

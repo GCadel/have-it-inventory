@@ -32,7 +32,7 @@ const PartForm = () => {
       setErrorMessage('Uh oh, something went wrong');
       setLoading(false);
     } else {
-      navigate('/dashboard');
+      navigate('/parts');
     }
   }
   return (
@@ -42,7 +42,7 @@ const PartForm = () => {
         <FormField
           name="part-name"
           type={'text'}
-          placeholder={'Pedal Set, Grey'}
+          placeholder={'Pedal Set, Gray'}
           displayText={'Part Name'}
         />
         <FormField
@@ -67,7 +67,7 @@ const PartForm = () => {
 
         <ErrorBox error={errorMessage} />
         <ButtonContainer>
-          <Link to={'/dashboard'}>Cancel</Link>
+          <Link to={'/parts'}>Cancel</Link>
           <Button
             text={loading ? 'Creating' : 'Create Part'}
             buttonType={'primary'}

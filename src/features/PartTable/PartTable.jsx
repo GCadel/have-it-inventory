@@ -92,7 +92,6 @@ const PartTable = () => {
   return (
     <div className={style['part-table']}>
       <div className={style['part-table-controls']}>
-        <h3>Your Parts List</h3>
         <SearchBar
           onChange={searchByName}
           value={queryTerm}
@@ -102,7 +101,7 @@ const PartTable = () => {
           <Button
             text={'Delete Selected'}
             disabled={selectedItems.length < 1}
-            buttonType={'secondary'}
+            buttonType={'delete'}
             action={deleteSelectedData}
           />
           <Button
