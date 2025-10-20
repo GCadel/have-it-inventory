@@ -12,6 +12,7 @@ import {
 import { PartSelector } from '../features/PartSelector/PartSelector';
 import { PartCard } from '../features/PartCard/PartCard';
 import ErrorBox from '../shared/ErrorBox';
+import { CenteredText } from '../shared/CenteredText';
 
 export const Assembly = () => {
   const { session } = UserAuth();
@@ -101,19 +102,25 @@ export const Assembly = () => {
 
   return (
     <>
-      <h2>{assemblyData.name}</h2>
-      <p style={{ marginBottom: '15px', textAlign: 'center' }}>
-        {assemblyData.description}
-      </p>
-      <h3>Parts</h3>
-      <hr />
+      <CenteredText>
+        <h2>{assemblyData.name}</h2>
+        <p>{assemblyData.description}</p>
+      </CenteredText>
       <br />
+      <h3>Part List</h3>
+
       <ErrorBox error={errMessage} />
       {partList.length > 0 ? (
         <ul>
           {partList.map((part) => {
             return (
-              <PartCard key={part.id} partData={part} deletePart={deletePart} />
+              <PartCard
+                key={part.id}
+                partData={part}
+                deletePart={deletePart}
+                setErrMessage={setErrMessage}
+                errMessage={errMessage}
+              />
             );
           })}
         </ul>
@@ -135,7 +142,7 @@ export const Assembly = () => {
         action={() => setIsOpen(true)}
       />
       <br />
-      <Link to={'/assemblies'}>Back to assemblies</Link>
+      <Link to={'/assemblies'}>Back to Assemblies</Link>
     </>
   );
 };
