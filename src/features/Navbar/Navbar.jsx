@@ -18,7 +18,7 @@ export const Navbar = () => {
 
   return (
     <header className="navbar">
-      <div>
+      <div className="logo">
         <h1>Have-It</h1>
         <p>Your Inventory Management Tool</p>
       </div>
@@ -49,9 +49,6 @@ export const Navbar = () => {
             </li>
             <li>
               <NavLink to={'/about'}>About</NavLink>
-            </li>
-            <li>
-              <NavLink to={'/settings'}>Settings</NavLink>
             </li>
           </ul>
         )}
