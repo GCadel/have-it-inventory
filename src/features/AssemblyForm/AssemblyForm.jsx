@@ -5,7 +5,6 @@ import ErrorBox from '../../shared/ErrorBox';
 import FormField from '../../shared/FormField';
 import { useRef, useState } from 'react';
 import { UserAuth } from '../../context/AuthContext';
-import { addPart } from '../../api/parts';
 import { createAssembly } from '../../api/assemblies';
 
 const AssemblyForm = () => {
@@ -15,8 +14,6 @@ const AssemblyForm = () => {
   const { session } = UserAuth();
   const navigate = useNavigate();
   const [description, setDescription] = useState('');
-
-  async function createAssemblyEntry(data) {}
 
   async function submitData(e) {
     e.preventDefault();
@@ -36,8 +33,6 @@ const AssemblyForm = () => {
     } else {
       navigate('/assemblies');
     }
-
-    console.log(assembly);
   }
   return (
     <div>
