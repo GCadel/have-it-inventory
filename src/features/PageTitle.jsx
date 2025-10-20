@@ -1,0 +1,10 @@
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router';
+
+export const PageTitle = ({ title }) => {
+  const location = useLocation();
+  useEffect(() => {
+    document.title = title;
+  }, [location, title]);
+  return;
+};

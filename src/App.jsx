@@ -14,26 +14,115 @@ import { Parts } from './pages/Parts';
 import { Assemblies } from './pages/Assemblies';
 import { Assembly } from './pages/Assembly';
 import CreateAssembly from './pages/CreateAssembly';
+import { PageTitle } from './features/PageTitle';
 
 function App() {
   return (
     <AuthContextProvider>
       <Layout>
         <Routes>
-          <Route index element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route
+            index
+            element={
+              <>
+                <PageTitle title={'Have-It | Home'} />
+                <Home />
+              </>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <>
+                <PageTitle title={'Have-It | About'} />
+                <About />
+              </>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <>
+                <PageTitle title={'Login to Have-It'} />
+                <Login />
+              </>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <>
+                <PageTitle title={'Sign up with Have-It'} />
+                <Signup />
+              </>
+            }
+          />
           <Route element={<PrivateRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/create_part" element={<CreatePart />} />
-            <Route path="/parts" element={<Parts />} />
-            <Route path="/assemblies" element={<Assemblies />} />
-            <Route path="/create_assembly" element={<CreateAssembly />} />
-            <Route path="/assembly/:id" element={<Assembly />} />
+            <Route
+              path="/dashboard"
+              element={
+                <>
+                  <PageTitle title={'Your Dashboard'} />
+                  <Dashboard />
+                </>
+              }
+            />
+            <Route
+              path="/create_part"
+              element={
+                <>
+                  <PageTitle title={'Creating New Part'} />
+                  <CreatePart />
+                </>
+              }
+            />
+            <Route
+              path="/parts"
+              element={
+                <>
+                  <PageTitle title={'Your Parts'} />
+                  <Parts />
+                </>
+              }
+            />
+            <Route
+              path="/assemblies"
+              element={
+                <>
+                  <PageTitle title={'Your Assemblies'} />
+                  <Assemblies />
+                </>
+              }
+            />
+            <Route
+              path="/create_assembly"
+              element={
+                <>
+                  <PageTitle title={'Creating New Assembly'} />
+                  <CreateAssembly />
+                </>
+              }
+            />
+            <Route
+              path="/assembly/:id"
+              element={
+                <>
+                  <PageTitle title={'Assembly Details'} />
+                  <Assembly />
+                </>
+              }
+            />
           </Route>
 
-          <Route path="/*" element={<NotFound />} />
+          <Route
+            path="/*"
+            element={
+              <>
+                <PageTitle title={'Where Are We?'} />
+                <NotFound />
+              </>
+            }
+          />
         </Routes>
       </Layout>
     </AuthContextProvider>
