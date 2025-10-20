@@ -1,5 +1,6 @@
 .btn_primary,
 .btn_secondary,
+.btn_delete,
 .btn_default {
   outline: none;
   border: none;
@@ -51,5 +52,21 @@
   }
 }
 
-.btn_default {
+.btn_delete {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: inherit;
+
+  &:hover {
+    svg {
+      fill: red;
+    }
+
+    &:active {
+      transform: scale(0.9);
+      transition: 0.2s;
+    }
+  }
 }
