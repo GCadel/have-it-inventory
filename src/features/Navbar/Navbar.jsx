@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 import { Button } from '../../shared/Button/Button';
 import { UserAuth } from '../../context/AuthContext';
 
@@ -26,13 +26,13 @@ export const Navbar = () => {
         {session ? (
           <ul className="nav-links">
             <li>
-              <Link to={'/dashboard'}>Dashboard</Link>
+              <NavLink to={'/dashboard'}>Dashboard</NavLink>
             </li>
             <li>
-              <Link to={'/parts'}>Parts</Link>
+              <NavLink to={'/parts'}>Parts</NavLink>
             </li>
             <li>
-              <Link to={'/assemblies'}>Assemblies</Link>
+              <NavLink to={'/assemblies'}>Assemblies</NavLink>
             </li>
             <li>
               <Button
@@ -45,13 +45,13 @@ export const Navbar = () => {
         ) : (
           <ul className="nav-links">
             <li>
-              <Link to={'/'}>Home</Link>
+              <NavLink to={'/'}>Home</NavLink>
             </li>
             <li>
-              <Link to={'/about'}>About</Link>
+              <NavLink to={'/about'}>About</NavLink>
             </li>
             <li>
-              <Link to={'/settings'}>Settings</Link>
+              <NavLink to={'/settings'}>Settings</NavLink>
             </li>
           </ul>
         )}
