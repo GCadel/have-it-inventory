@@ -6,6 +6,7 @@ import { ButtonContainer } from '../shared/ButtonContainer';
 import FormField from '../shared/FormField';
 import { UserAuth } from '../context/AuthContext';
 import ErrorBox from '../shared/ErrorBox';
+import { CenteredText } from '../shared/CenteredText';
 
 export const Signup = () => {
   const navigate = useNavigate();
@@ -47,8 +48,10 @@ export const Signup = () => {
 
   return (
     <>
-      <h2>Get Started With Have-It</h2>
-      <p>Create an account now!</p>
+      <CenteredText>
+        <h2>Get Started With Have-It</h2>
+        <p>Create an account now!</p>
+      </CenteredText>
       <form id="signup-form" ref={signupForm} onSubmit={handleSignup}>
         <FormField
           name="name"
@@ -72,7 +75,7 @@ export const Signup = () => {
         <ButtonContainer>
           <Link to={'/login'}>Have an account?</Link>
           <Button
-            text={loading ? 'Submitting' : 'Sign Up'}
+            text={loading ? 'Signing Up' : 'Sign Up'}
             buttonType={'primary'}
             disabled={loading}
           />

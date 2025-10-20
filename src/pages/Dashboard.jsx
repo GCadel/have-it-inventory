@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router';
 import { UserAuth } from '../context/AuthContext';
 import { ButtonContainer } from '../shared/ButtonContainer';
 import { Button } from '../shared/Button/Button';
+import { CenteredText } from '../shared/CenteredText';
 
 export const Dashboard = () => {
   const { session } = UserAuth();
@@ -9,10 +10,12 @@ export const Dashboard = () => {
 
   return (
     <>
-      <h2>
-        Welcome, {session ? session.user.user_metadata.displayName : 'User'}
-      </h2>
-      <p style={{ textAlign: 'center' }}>Let's get started</p>
+      <CenteredText>
+        <h2>
+          Welcome, {session ? session.user.user_metadata.displayName : 'User'}
+        </h2>
+        <p>Let's get started</p>
+      </CenteredText>
       <br />
       <ButtonContainer>
         <Button
