@@ -197,3 +197,7 @@ ul {
     box-shadow: -4px 4px 10px black;
   }
 }
+
+.current-page {
+  border-bottom: 2px solid rgb(72, 139, 216);
+}

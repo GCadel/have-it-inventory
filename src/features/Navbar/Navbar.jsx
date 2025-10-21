@@ -1,10 +1,13 @@
-import { NavLink, useNavigate } from 'react-router';
+import { NavLink, useLocation, useNavigate } from 'react-router';
 import { Button } from '../../shared/Button/Button';
 import { UserAuth } from '../../context/AuthContext';
+import { useEffect } from 'react';
+import { HighlightedLink } from './HighlightedLink';
 
 export const Navbar = () => {
   const { session, logout } = UserAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   async function handleLogoff(e) {
     e.preventDefault();
@@ -26,13 +29,25 @@ export const Navbar = () => {
         {session ? (
           <ul className="nav-links">
             <li>
-              <NavLink to={'/dashboard'}>Dashboard</NavLink>
+              <HighlightedLink
+                text={'Dashboard'}
+                path={'/dashboard'}
+                currentLocation={location.pathname}
+              />
             </li>
             <li>
-              <NavLink to={'/parts'}>Parts</NavLink>
+              <HighlightedLink
+                text={'Parts'}
+                path={'/parts'}
+                currentLocation={location.pathname}
+              />
             </li>
             <li>
-              <NavLink to={'/assemblies'}>Assemblies</NavLink>
+              <HighlightedLink
+                text={'Assemblies'}
+                path={'/assemblies'}
+                currentLocation={location.pathname}
+              />
             </li>
             <li>
               <Button
@@ -45,10 +60,18 @@ export const Navbar = () => {
         ) : (
           <ul className="nav-links">
             <li>
-              <NavLink to={'/'}>Home</NavLink>
+              <HighlightedLink
+                text={'Home'}
+                path={'/'}
+                currentLocation={location.pathname}
+              />
             </li>
             <li>
-              <NavLink to={'/about'}>About</NavLink>
+              <HighlightedLink
+                text={'About'}
+                path={'/about'}
+                currentLocation={location.pathname}
+              />
             </li>
           </ul>
         )}
