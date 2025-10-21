@@ -8,7 +8,7 @@ export const TableRow = ({ rowData, addSelectedRow, removeSelectedRow }) => {
 
   useEffect(() => {
     async function updateRow() {
-      const { error } = await updatePartById(item.id, item);
+      await updatePartById(item.id, item);
     }
 
     if (finishedEditing) {

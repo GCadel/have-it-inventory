@@ -6,7 +6,6 @@ const AuthContext = createContext();
 export function AuthContextProvider({ children }) {
   const [session, setSession] = useState(null);
 
-  // Sign up
   async function signupNewUser(email, password, displayName) {
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -29,7 +28,6 @@ export function AuthContextProvider({ children }) {
     }
   }
 
-  // Log off
   async function logout() {
     try {
       const { error } = await supabase.auth.signOut();
@@ -43,7 +41,6 @@ export function AuthContextProvider({ children }) {
     }
   }
 
-  // Log in
   async function login(email, password) {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -62,7 +59,6 @@ export function AuthContextProvider({ children }) {
     }
   }
 
-  // Listen for auth events and set the status, like logging in and signing out
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);

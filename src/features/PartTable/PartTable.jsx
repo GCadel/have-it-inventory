@@ -17,7 +17,6 @@ const PartTable = () => {
   const [queryData, setQueryData] = useState([]);
   const [queryTerm, setQueryTerm] = useState('');
 
-  // Fetch data from service, refreshes table when CRUD actions occur
   useEffect(() => {
     async function getData() {
       const { data, error } = await getAllParts();
@@ -44,7 +43,6 @@ const PartTable = () => {
     setSelectedItems(newItems);
   }
 
-  // Take user to create part page
   function createPart() {
     navigator('/create_part');
   }
@@ -80,7 +78,6 @@ const PartTable = () => {
     setSelectedItems([]);
   }
 
-  // Search for items in inventory by name
   function searchByName(itemName) {
     setQueryTerm(itemName);
     const filteredData = tableData.filter((item) =>
@@ -105,7 +102,22 @@ const PartTable = () => {
             action={deleteSelectedData}
           />
           <Button
-            text={'Add Item'}
+            text={
+              <>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#e3e3e3"
+                  >
+                    <path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z" />
+                  </svg>
+                  <span>Add Item</span>
+                </div>
+              </>
+            }
             buttonType={'primary'}
             action={createPart}
           />

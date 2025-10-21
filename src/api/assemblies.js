@@ -1,10 +1,7 @@
-// All requiring user ID
-
 const TABLE = 'assemblies';
 
 import { supabase } from '../lib/supabase';
 
-// Create assembly
 export async function createAssembly(assemblyEntry, userId) {
   const { error, data } = await supabase
     .from(TABLE)
@@ -13,7 +10,6 @@ export async function createAssembly(assemblyEntry, userId) {
   return { error, data };
 }
 
-// Get all assemblies
 export async function getAllAssemblies(userId) {
   const { error, data } = await supabase
     .from(TABLE)
@@ -24,7 +20,6 @@ export async function getAllAssemblies(userId) {
   return { error, data };
 }
 
-// Get assembly by id
 export async function getAssemblyById(assemblyId, userId) {
   const { error, data } = await supabase
     .from(TABLE)
@@ -36,7 +31,6 @@ export async function getAssemblyById(assemblyId, userId) {
   return { error, data };
 }
 
-// Delete assembly
 export async function deleteAssemblyById(assemblyId, userId) {
   const { error } = await supabase
     .from(TABLE)

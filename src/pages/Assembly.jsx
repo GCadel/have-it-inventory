@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import { Button } from '../shared/Button/Button';
 import { getAssemblyById } from '../api/assemblies';
@@ -40,6 +40,10 @@ export const Assembly = () => {
     return { error, data };
   }
 
+  const handleError = useCallback((message) => {
+    setErrMessage(message);
+  });
+
   async function addPartToAssembly(partId, partName, quantity = 1) {
     setLoading(true);
     const { error, data } = await createAssemblyPart(
@@ -57,7 +61,6 @@ export const Assembly = () => {
     setLoading(false);
   }
 
-  // For refreshing the table when adding or removing parts
   useEffect(() => {
     async function reloadData() {
       const { error, data } = await loadParts();
@@ -75,7 +78,6 @@ export const Assembly = () => {
     }
   }, [refreshTable]);
 
-  // Initial Assembly load
   useEffect(() => {
     async function loadData() {
       const assemRes = await loadAssembly();
@@ -118,7 +120,7 @@ export const Assembly = () => {
                 key={part.id}
                 partData={part}
                 deletePart={deletePart}
-                setErrMessage={setErrMessage}
+                setErrMessage={handleError}
                 errMessage={errMessage}
               />
             );

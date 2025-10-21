@@ -4,12 +4,7 @@ import { updateAssemblyPartQuantity } from '../../api/assembly_parts';
 import style from './PartCard.module.css';
 import Loader from '../../shared/Loader/Loader';
 
-export const PartCard = ({
-  partData,
-  deletePart,
-  errMessage,
-  setErrMessage,
-}) => {
+export const PartCard = ({ partData, deletePart, setErrMessage }) => {
   const [partCount, setPartCount] = useState(partData.quantity);
   const [partCountLocal, setPartCountLocal] = useState(partData.quantity);
 
